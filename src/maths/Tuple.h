@@ -24,6 +24,33 @@ namespace lighting
         bool operator==(const Tuple& other) const;
         bool operator!=(const Tuple& other) const;
 
+        // add
+        Tuple& operator+=(const Tuple& other);
+        Tuple operator+(const Tuple& other) const;
+
+        // sub
+        Tuple& operator-=(const Tuple& other);
+        Tuple operator-(const Tuple& other) const;
+
+        // negate
+        Tuple operator-() const;
+
+        // mult
+        Tuple& operator*=(double scalar);
+        Tuple operator*(double scalar) const;
+
+        // div
+        Tuple& operator/=(double scalar);
+        Tuple operator/(double scalar) const;
+
+        // length
+        double length2() const;
+        double length() const;
+
+        // normalize
+        Tuple& normalize();
+        Tuple normalized() const;
+        
         // type
         bool isPoint() const;
         bool isVector() const;
