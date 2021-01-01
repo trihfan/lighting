@@ -26,4 +26,3 @@ add_subdirectory(tests)
 
 # setup coral project directory
 set_target_properties(src PROPERTIES FOLDER "lighting/src")
-set_target_properties(tests PROPERTIES FOLDER "lighting/tests")
