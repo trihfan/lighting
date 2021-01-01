@@ -1,0 +1,8 @@
+project(tests)
+
+# enable testing
+enable_testing()
+find_package(GTest CONFIG REQUIRED)
+
+# tests
+add_subdirectory(tuple)
