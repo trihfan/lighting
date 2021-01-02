@@ -13,10 +13,10 @@ int main(int argc, char **argv)
 TEST(Tuple, IsPoint) 
 {
     Tuple a(4.3, -4.2, 3.1, 1);
-    ASSERT_DOUBLE_EQ(a.x, 4.3);
-    ASSERT_DOUBLE_EQ(a.y, -4.2);
-    ASSERT_DOUBLE_EQ(a.z, 3.1);
-    ASSERT_DOUBLE_EQ(a.w, 1);
+    ASSERT_DOUBLE_EQ(a.x(), 4.3);
+    ASSERT_DOUBLE_EQ(a.y(), -4.2);
+    ASSERT_DOUBLE_EQ(a.z(), 3.1);
+    ASSERT_DOUBLE_EQ(a.w(), 1);
     ASSERT_TRUE(a.isPoint());
     ASSERT_FALSE(a.isVector());
 }
@@ -24,10 +24,10 @@ TEST(Tuple, IsPoint)
 TEST(Tuple, IsVector) 
 {
     Tuple a(4.3, -4.2, 3.1, 0);
-    ASSERT_DOUBLE_EQ(a.x, 4.3);
-    ASSERT_DOUBLE_EQ(a.y, -4.2);
-    ASSERT_DOUBLE_EQ(a.z, 3.1);
-    ASSERT_DOUBLE_EQ(a.w, 0);
+    ASSERT_DOUBLE_EQ(a.x(), 4.3);
+    ASSERT_DOUBLE_EQ(a.y(), -4.2);
+    ASSERT_DOUBLE_EQ(a.z(), 3.1);
+    ASSERT_DOUBLE_EQ(a.w(), 0);
     ASSERT_FALSE(a.isPoint());
     ASSERT_TRUE(a.isVector());
 }
@@ -45,10 +45,10 @@ TEST(Tuple, Vector)
 TEST(Tuple, Color) 
 {
     ASSERT_EQ(color(-0.5, 0.4, 1.7), Tuple(-0.5, 0.4, 1.7, 1));
-    ASSERT_DOUBLE_EQ(color(-0.5, 0.4, 1.7).r, -0.5);
-    ASSERT_DOUBLE_EQ(color(-0.5, 0.4, 1.7).g, 0.4);
-    ASSERT_DOUBLE_EQ(color(-0.5, 0.4, 1.7).b, 1.7);
-    ASSERT_DOUBLE_EQ(color(-0.5, 0.4, 1.7).a, 1);
+    ASSERT_DOUBLE_EQ(color(-0.5, 0.4, 1.7).r(), -0.5);
+    ASSERT_DOUBLE_EQ(color(-0.5, 0.4, 1.7).g(), 0.4);
+    ASSERT_DOUBLE_EQ(color(-0.5, 0.4, 1.7).b(), 1.7);
+    ASSERT_DOUBLE_EQ(color(-0.5, 0.4, 1.7).a(), 1);
 }
 
 TEST(Tuple, Add) 
@@ -117,8 +117,8 @@ TEST(Tuple, Cross)
 
 TEST(Tuple, Colors) 
 {   
-    ASSERT_EQ(color(0.9, 0.6, 0.75) + color(0.7, 0.1, 0.25), color(1.6, 0.7, 1.0));
-    ASSERT_EQ(color(0.9, 0.6, 0.75) - color(0.7, 0.1, 0.25), color(0.2, 0.5, 0.5));
-    ASSERT_EQ(color(0.2, 0.3, 0.4) * 2, color(0.4, 0.6, 0.8));
-    ASSERT_EQ(color(1, 0.2, 0.4) * color(0.9, 1, 0.1), color(0.9, 0.2, 0.04));
+    ASSERT_EQ(color(0.9, 0.6, 0.75) + color(0.7, 0.1, 0.25), Tuple(1.6, 0.7, 1.0, 2));
+    ASSERT_EQ(color(0.9, 0.6, 0.75) - color(0.7, 0.1, 0.25), Tuple(0.2, 0.5, 0.5, 0));
+    ASSERT_EQ(color(0.2, 0.3, 0.4) * 2, Tuple(0.4, 0.6, 0.8, 2));
+    ASSERT_EQ(color(1, 0.2, 0.4) * color(0.9, 1, 0.1), Tuple(0.9, 0.2, 0.04, 1));
 }

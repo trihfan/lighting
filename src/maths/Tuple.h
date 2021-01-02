@@ -2,9 +2,13 @@
 #define TUPLE_H
 
 #include <ostream>
+#include <array>
+
+#define DECLARE_ACCESSOR(X, Y) inline double& ##X(){ return Y; } inline const double& ##X() const { return Y; }
 
 namespace lighting
 {
+    class Matrix;
     class Tuple;
     using Point = Tuple;
     using Vector = Tuple;
@@ -29,7 +33,7 @@ namespace lighting
     {
     public:
         // construction
-        Tuple() = default;
+        Tuple();
         Tuple(double x, double y, double z, double w = 1);
         Tuple(const Tuple& other);
         ~Tuple() = default;
@@ -40,6 +44,18 @@ namespace lighting
         // comparison
         bool operator==(const Tuple& other) const;
         bool operator!=(const Tuple& other) const;
+
+        // accessor
+        double& operator()(size_t index);
+        const double& operator()(size_t index) const;
+        DECLARE_ACCESSOR(x, data[0])
+        DECLARE_ACCESSOR(y, data[1]);
+        DECLARE_ACCESSOR(z, data[2]);
+        DECLARE_ACCESSOR(w, data[3]);
+        DECLARE_ACCESSOR(r, data[0])
+        DECLARE_ACCESSOR(g, data[1]);
+        DECLARE_ACCESSOR(b, data[2]);
+        DECLARE_ACCESSOR(a, data[3]);
 
         // add
         Tuple& operator+=(const Tuple& other);
@@ -57,6 +73,7 @@ namespace lighting
         Tuple operator*(double scalar) const;
         Tuple& operator*=(const Tuple& other);
         Tuple operator*(const Tuple& other) const;
+        Tuple operator*(const Matrix& other) const;
 
         // div
         Tuple& operator/=(double scalar);
@@ -74,12 +91,8 @@ namespace lighting
         bool isPoint() const;
         bool isVector() const;
 
-    public:
-        // values (x, y, z, w)
-        double x = 0, y = 0, z = 0, w = 0;
-
-        // helper for color (r, g, b, a)
-        double &r = x, &g = y, &b = z, &a = w;
+    private:
+        std::array<double, 4> data;
     };
 
     // inlines
@@ -100,18 +113,18 @@ namespace lighting
 
     double dot(const Tuple& a, const Tuple& b)
     {
-        return a.x * b. x + a.y * b. y + a.z * b. z + a.w * b. w;
+        return a.x() * b.x() + a.y() * b.y() + a.z() * b.z() + a.w() * b.w();
     }
     
     Tuple cross(const Tuple& a, const Tuple& b)
     {
-        return vector(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x);
+        return vector(a.y() * b.z() - a.z() * b.y(), a.z() * b.x() - a.x() * b.z(), a.x() * b.y() - a.y() * b.x());
     }
 
     // streams
     std::ostream &operator<<(std::ostream& os, const Tuple& tuple) 
     { 
-        return os << "Tuple:" << (tuple.isVector() ? "point -> " : "vector -> ") << "[" << tuple.x << ", " << tuple.y << ", " << tuple.z << ", " << tuple.w << "]";
+        return os << "Tuple:" << (tuple.isVector() ? "point -> " : "vector -> ") << "[" << tuple.x() << ", " << tuple.y() << ", " << tuple.z() << ", " << tuple.w() << "]";
     }
 }
 #endif

@@ -1,3 +1,5 @@
+#include <algorithm>
+#include <string>
 #include "CanvasPPMExporter.h"
 #include "Canvas.h"
 
@@ -9,42 +11,23 @@ void CanvasPPMExporter::operator()(const Canvas& canvas, std::ostream& output) c
     output << canvas.width() << " " << canvas.height()  << std::endl;
     output << "255" << std::endl;
     
-    for (size_t x = 0; x < 10; x++)
+    for (size_t y = 0; y < canvas.height(); y++)
     {
-        int current = 0;
-        for (size_t y = 0; y < 20; y++)
+        size_t current = 0;
+        for (size_t x = 0; x < canvas.width(); x++)
         {
             Color color = canvas(x, y);
-
-            // red
-            std::string value = std::to_string(std::clamp(static_cast<int>(color.r * 255), 0, 255));
-            if (current + value.size() >= 70)
+            for (size_t i = 0; i < 3; i++)
             {
-                output << std::endl;
-                current = 0;
+                std::string value = std::to_string(std::clamp(static_cast<int>(std::round(color(i) * 255)), 0, 255));
+                if (current + value.size() >= 70)
+                {
+                    output << std::endl;
+                    current = 0;
+                }
+                current += value.size() + 1;
+                output << value << ' ';
             }
-            current += value.size() + 1;
-            output << value << ' ';
-
-            // green
-            value = std::to_string(std::clamp(static_cast<int>(color.g * 255), 0, 255));
-            if (current + value.size() >= 70)
-            {
-                output << std::endl;
-                current = 0;
-            }
-            current += value.size() + 1;
-            output << value << ' ';
-
-            // blue
-            value = std::to_string(std::clamp(static_cast<int>(color.b * 255), 0, 255));
-            if (current + value.size() >= 70)
-            {
-                output << std::endl;
-                current = 0;
-            }
-            current += value.size() + 1;
-            output << value << ' ';
         }
         output << std::endl;
     }
