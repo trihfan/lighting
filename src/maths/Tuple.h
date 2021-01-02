@@ -31,6 +31,7 @@ namespace lighting
         // construction
         Tuple() = default;
         Tuple(double x, double y, double z, double w = 1);
+        Tuple(const Tuple& other);
         ~Tuple() = default;
 
         // assignement

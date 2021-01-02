@@ -9,6 +9,10 @@ Tuple::Tuple(double x, double y, double z, double w) : x(x), y(y), z(z), w(w)
 {    
 }
 
+Tuple::Tuple(const Tuple& other) : x(other.x), y(other.y), z(other.z), w(other.w), r(x), g(y), b(z), a(w)
+{
+}
+
 Tuple& Tuple::operator=(const Tuple& other)
 {
     x = other.x;
