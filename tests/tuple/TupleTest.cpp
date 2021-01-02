@@ -94,5 +94,12 @@ TEST(Tuple, Normalize)
 }
 
 TEST(Tuple, Dot) 
-{
+{   
+    ASSERT_DOUBLE_EQ(dot(vector(1, 2, 3), vector(2, 3, 4)), 20);
+}
+
+TEST(Tuple, Cross) 
+{   
+    ASSERT_EQ(cross(vector(1, 2, 3), vector(2, 3, 4)), vector(-1, 2, -1));
+    ASSERT_EQ(cross(vector(2, 3, 4), vector(1, 2, 3)), vector(1, -2, 1));
 }

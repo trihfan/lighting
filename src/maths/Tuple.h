@@ -1,6 +1,8 @@
 #ifndef TUPLE_H
 #define TUPLE_H
 
+#include <ostream>
+
 namespace lighting
 {
     class Tuple;
@@ -8,6 +10,11 @@ namespace lighting
     // helpers
     static inline Tuple point(double x, double y, double z);
     static inline Tuple vector(double x, double y, double z);
+    static inline std::ostream &operator<<(std::ostream& os, const Tuple& tuple); 
+
+    // maths
+    static inline double dot(const Tuple& a, const Tuple& b);
+    static inline Tuple cross(const Tuple& a, const Tuple& b);
 
     /**
      * Tuple class
@@ -50,7 +57,7 @@ namespace lighting
         // normalize
         Tuple& normalize();
         Tuple normalized() const;
-        
+
         // type
         bool isPoint() const;
         bool isVector() const;
@@ -60,14 +67,30 @@ namespace lighting
     };
 
     // inlines
-    static inline Tuple point(double x, double y, double z)
+    Tuple point(double x, double y, double z)
     {
         return Tuple(x, y, z, 1);
     }
     
-    static inline Tuple vector(double x, double y, double z)
+    Tuple vector(double x, double y, double z)
     {
         return Tuple(x, y, z, 0);
+    }
+
+    double dot(const Tuple& a, const Tuple& b)
+    {
+        return a.x * b. x + a.y * b. y + a.z * b. z + a.w * b. w;
+    }
+    
+    Tuple cross(const Tuple& a, const Tuple& b)
+    {
+        return vector(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x);
+    }
+
+    // streams
+    std::ostream &operator<<(std::ostream& os, const Tuple& tuple) 
+    { 
+        return os << "Tuple:" << (tuple.isVector() ? "point -> " : "vector -> ") << "[" << tuple.x << ", " << tuple.y << ", " << tuple.z << ", " << tuple.w << "]";
     }
 }
 #endif
