@@ -42,6 +42,15 @@ TEST(Tuple, Vector)
     ASSERT_EQ(vector(4.3, -4.2, 3.1), Tuple(4.3, -4.2, 3.1, 0));
 }
 
+TEST(Tuple, Color) 
+{
+    ASSERT_EQ(color(-0.5, 0.4, 1.7), Tuple(-0.5, 0.4, 1.7, 1));
+    ASSERT_DOUBLE_EQ(color(-0.5, 0.4, 1.7).r, -0.5);
+    ASSERT_DOUBLE_EQ(color(-0.5, 0.4, 1.7).g, 0.4);
+    ASSERT_DOUBLE_EQ(color(-0.5, 0.4, 1.7).b, 1.7);
+    ASSERT_DOUBLE_EQ(color(-0.5, 0.4, 1.7).a, 1);
+}
+
 TEST(Tuple, Add) 
 {
     ASSERT_EQ(Tuple(3, -2, 5, 1) + Tuple(-2, 3, 1, 0), Tuple(1, 1, 6, 1));
@@ -68,6 +77,8 @@ TEST(Tuple, Mult)
     ASSERT_EQ(Tuple(1, -2, 3, -4) *= 3.5, Tuple(3.5, -7, 10.5, -14));
     ASSERT_EQ(Tuple(1, -2, 3, -4) * 0.5, Tuple(0.5, -1, 1.5, -2));
     ASSERT_EQ(Tuple(1, -2, 3, -4) *= 0.5, Tuple(0.5, -1, 1.5, -2));
+    ASSERT_EQ(Tuple(1, -2, 3, -4) * Tuple(1, -2, 3, -4), Tuple(1, 4, 9, 16));
+    ASSERT_EQ(Tuple(1, -2, 3, -4) *= Tuple(1, -2, 3, -4), Tuple(1, 4, 9, 16));
 }
 
 TEST(Tuple, Div) 
@@ -102,4 +113,12 @@ TEST(Tuple, Cross)
 {   
     ASSERT_EQ(cross(vector(1, 2, 3), vector(2, 3, 4)), vector(-1, 2, -1));
     ASSERT_EQ(cross(vector(2, 3, 4), vector(1, 2, 3)), vector(1, -2, 1));
+}
+
+TEST(Tuple, Colors) 
+{   
+    ASSERT_EQ(color(0.9, 0.6, 0.75) + color(0.7, 0.1, 0.25), color(1.6, 0.7, 1.0));
+    ASSERT_EQ(color(0.9, 0.6, 0.75) - color(0.7, 0.1, 0.25), color(0.2, 0.5, 0.5));
+    ASSERT_EQ(color(0.2, 0.3, 0.4) * 2, color(0.4, 0.6, 0.8));
+    ASSERT_EQ(color(1, 0.2, 0.4) * color(0.9, 1, 0.1), color(0.9, 0.2, 0.04));
 }

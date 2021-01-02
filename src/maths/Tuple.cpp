@@ -9,6 +9,15 @@ Tuple::Tuple(double x, double y, double z, double w) : x(x), y(y), z(z), w(w)
 {    
 }
 
+Tuple& Tuple::operator=(const Tuple& other)
+{
+    x = other.x;
+    y = other.y;
+    z = other.z;
+    w = other.w;
+    return *this;
+}
+
 bool Tuple::operator==(const Tuple& other) const
 {
     return std::abs(x - other.x) < epsilon() && std::abs(x - other.x) < epsilon() && std::abs(y - other.y) < epsilon() && std::abs(z - other.z) < epsilon();
@@ -64,6 +73,20 @@ Tuple& Tuple::operator*=(double scalar)
 Tuple Tuple::operator*(double scalar) const
 {
     return Tuple(x * scalar, y * scalar, z * scalar, w * scalar);
+}
+
+Tuple& Tuple::operator*=(const Tuple& other)
+{
+    x *= other.x;
+    y *= other.y;
+    z *= other.z;
+    w *= other.w;
+    return *this;
+}
+
+Tuple Tuple::operator*(const Tuple& other) const
+{
+    return Tuple(x * other.x, y * other.y, z * other.z, w * other.w);
 }
 
 Tuple& Tuple::operator/=(double scalar)

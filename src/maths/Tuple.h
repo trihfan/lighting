@@ -6,10 +6,16 @@
 namespace lighting
 {
     class Tuple;
+    using Point = Tuple;
+    using Vector = Tuple;
+    using Color = Tuple;
 
-    // helpers
+    // tuple types
     static inline Tuple point(double x, double y, double z);
     static inline Tuple vector(double x, double y, double z);
+    static inline Tuple color(double r, double g, double b, double a = 1);
+
+    // helpers
     static inline std::ostream &operator<<(std::ostream& os, const Tuple& tuple); 
 
     // maths
@@ -27,6 +33,9 @@ namespace lighting
         Tuple(double x, double y, double z, double w = 1);
         ~Tuple() = default;
 
+        // assignement
+        Tuple& operator=(const Tuple& other);
+        
         // comparison
         bool operator==(const Tuple& other) const;
         bool operator!=(const Tuple& other) const;
@@ -45,6 +54,8 @@ namespace lighting
         // mult
         Tuple& operator*=(double scalar);
         Tuple operator*(double scalar) const;
+        Tuple& operator*=(const Tuple& other);
+        Tuple operator*(const Tuple& other) const;
 
         // div
         Tuple& operator/=(double scalar);
@@ -63,7 +74,11 @@ namespace lighting
         bool isVector() const;
 
     public:
+        // values (x, y, z, w)
         double x = 0, y = 0, z = 0, w = 0;
+
+        // helper for color (r, g, b, a)
+        double &r = x, &g = y, &b = z, &a = w;
     };
 
     // inlines
@@ -75,6 +90,11 @@ namespace lighting
     Tuple vector(double x, double y, double z)
     {
         return Tuple(x, y, z, 0);
+    }
+
+    Tuple color(double r, double g, double b, double a)
+    {
+        return Tuple(r, g, b, a);
     }
 
     double dot(const Tuple& a, const Tuple& b)

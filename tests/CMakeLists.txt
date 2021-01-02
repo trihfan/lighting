@@ -6,3 +6,4 @@ find_package(GTest CONFIG REQUIRED)
 
 # tests
 add_subdirectory(tuple)
+add_subdirectory(canvas)
