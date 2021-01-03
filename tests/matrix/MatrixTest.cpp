@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "maths/Matrix.h"
+#include "core/Matrix.h"
 
 using namespace lighting;
 

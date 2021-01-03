@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
-#include "maths/Tuple.h"
-#include "maths/Color.h"
+#include "core/Tuple.h"
+#include "core/Color.h"
 
 using namespace lighting;
 

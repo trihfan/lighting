@@ -82,6 +82,16 @@ namespace lighting
         std::array<double, 4> data;
     };
 
+    static inline Tuple operator*(double scalar, const Tuple& tuple)
+    {
+        return tuple * scalar;
+    }
+
+    static inline Tuple operator/(double scalar, const Tuple& tuple)
+    {
+        return tuple / scalar;
+    }
+
     // inlines
     double dot(const Tuple& a, const Tuple& b)
     {

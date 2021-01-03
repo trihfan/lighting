@@ -5,7 +5,7 @@
 #include <ostream>
 #include <unordered_map>
 #include <memory>
-#include "maths/Color.h"
+#include "core/Color.h"
 #include "CanvasExporter.h"
 
 namespace lighting
