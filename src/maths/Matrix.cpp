@@ -45,19 +45,19 @@ Matrix3x3::Matrix3x3(double a11, double a12, double a13, double a21, double a22,
 {
 }
 
-Matrix2x2 Matrix3x3::submatrix(int rowToRemove, int colToRemove) const
+Matrix2x2 Matrix3x3::submatrix(size_t rowToRemove, size_t colToRemove) const
 {
     Matrix2x2 sub;
     submatrixImpl(*this, sub, rowToRemove, colToRemove);
     return sub;
 }
 
-double Matrix3x3::minor(int rowToRemove, int colToRemove) const
+double Matrix3x3::minor(size_t rowToRemove, size_t colToRemove) const
 {
     return submatrix(rowToRemove, colToRemove).determinant();
 }
 
-double Matrix3x3::cofactor(int rowToRemove, int colToRemove) const
+double Matrix3x3::cofactor(size_t rowToRemove, size_t colToRemove) const
 {
     double m = minor(rowToRemove, colToRemove);
     return (rowToRemove + colToRemove) % 2 == 0 ? m : -m;
@@ -77,19 +77,19 @@ Matrix4x4::Matrix4x4(double a11, double a12, double a13, double a14, double a21,
 {
 }
 
-Matrix3x3 Matrix4x4::submatrix(int rowToRemove, int colToRemove) const
+Matrix3x3 Matrix4x4::submatrix(size_t rowToRemove, size_t colToRemove) const
 {
     Matrix3x3 sub;
     submatrixImpl(*this, sub, rowToRemove, colToRemove);
     return sub;
 }
 
-double Matrix4x4::minor(int rowToRemove, int colToRemove) const
+double Matrix4x4::minor(size_t rowToRemove, size_t colToRemove) const
 {
     return submatrix(rowToRemove, colToRemove).determinant();
 }
 
-double Matrix4x4::cofactor(int rowToRemove, int colToRemove) const
+double Matrix4x4::cofactor(size_t rowToRemove, size_t colToRemove) const
 {
     double m = minor(rowToRemove, colToRemove);
     return (rowToRemove + colToRemove) % 2 == 0 ? m : -m;
@@ -127,4 +127,74 @@ Matrix4x4 Matrix4x4::inverted() const
         }
     }
     return invertedMatrix;
+}
+
+Matrix4x4 Matrix4x4::translation(const Tuple& value)
+{
+    return translation(value.x(), value.y(), value.z());
+}
+
+Matrix4x4 Matrix4x4::translation(double x, double y, double z)
+{
+    Matrix4x4 m;
+    m(0, 3) = x;
+    m(1, 3) = y;
+    m(2, 3) = z;
+    return m;
+}
+
+Matrix4x4 Matrix4x4::scale(const Tuple& value)
+{
+    return scale(value.x(), value.y(), value.z());
+}
+
+Matrix4x4 Matrix4x4::scale(double x, double y, double z)
+{
+    Matrix4x4 m;
+    m(0, 0) = x;
+    m(1, 1) = y;
+    m(2, 2) = z;
+    return m;
+}
+
+Matrix4x4 Matrix4x4::rotateX(double radians)
+{
+    Matrix4x4 m;
+    m(1, 1) = std::cos(radians);
+    m(1, 2) = -std::sin(radians);
+    m(2, 1) = std::sin(radians);
+    m(2, 2) = std::cos(radians);
+    return m;
+}
+
+Matrix4x4 Matrix4x4::rotateY(double radians)
+{
+    Matrix4x4 m;
+    m(0, 0) = std::cos(radians);
+    m(0, 2) = std::sin(radians);
+    m(2, 0) = -std::sin(radians);
+    m(2, 2) = std::cos(radians);
+    return m;
+}
+
+Matrix4x4 Matrix4x4::rotateZ(double radians)
+{
+    Matrix4x4 m;
+    m(0, 0) = std::cos(radians);
+    m(0, 1) = -std::sin(radians);
+    m(1, 0) = std::sin(radians);
+    m(1, 1) = std::cos(radians);
+    return m;
+}
+
+Matrix4x4 Matrix4x4::shearing(double xy, double xz, double yx, double yz, double zx, double zy)
+{
+    Matrix4x4 m;
+    m(0, 1) = xy;
+    m(0, 2) = xz;
+    m(1, 0) = yx;
+    m(1, 2) = yz;
+    m(2, 0) = zx;
+    m(2, 10) = zy;
+    return m;
 }

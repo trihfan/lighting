@@ -1,5 +1,4 @@
 #include <gtest/gtest.h>
-#include <cmath>
 #include "maths/Matrix.h"
 
 using namespace lighting;
@@ -176,4 +175,90 @@ TEST(Matrix, Inverse4)
   Matrix4x4 m1(3, -9, 7, 3, 3, -8, 2, -9, -4, 4, 4, 1, -6, 5, -1, 1);
   Matrix4x4 m2(8, 2, 2, 2, 3, -1, 7, 0, 7, 0, 5, 4, 6, -2, 0, 5);
   ASSERT_EQ(m1 * m2 * m2.inverted(), m1);
+}
+
+TEST(Matrix, Translation) 
+{
+  ASSERT_EQ(Matrix4x4::translation(5, -3, 2) * Tuple::Point(-3, 4, 5), Tuple::Point(2, 1, 7));
+}
+
+TEST(Matrix, TranslationInverse) 
+{
+  ASSERT_EQ(Matrix4x4::translation(5, -3, 2).inverted() * Tuple::Point(-3, 4, 5), Tuple::Point(-8, 7, 3));
+}
+
+TEST(Matrix, TranslationVector) 
+{
+  ASSERT_EQ(Matrix4x4::translation(5, -3, 2) * Tuple::Vector(-3, 4, 5), Tuple::Vector(-3, 4, 5));
+}
+
+TEST(Matrix, ScalePoint) 
+{
+  ASSERT_EQ(Matrix4x4::scale(2, 3, 4) * Tuple::Point(-4, 6, 8), Tuple::Point(-8, 18, 32));
+}
+
+TEST(Matrix, ScaleVector) 
+{
+  ASSERT_EQ(Matrix4x4::scale(2, 3, 4) * Tuple::Vector(-4, 6, 8), Tuple::Vector(-8, 18, 32));
+}
+
+TEST(Matrix, ScaleInverse) 
+{
+  ASSERT_EQ(Matrix4x4::scale(2, 3, 4).inverted() * Tuple::Vector(-4, 6, 8), Tuple::Vector(-2, 2, 2));
+}
+
+TEST(Matrix, Reflection) 
+{
+  ASSERT_EQ(Matrix4x4::scale(-1, 1, 1) * Tuple::Point(2, 3, 4), Tuple::Point(-2, 3, 4));
+}
+
+TEST(Matrix, RotationX) 
+{
+  ASSERT_EQ(Matrix4x4::rotateX(M_PI / 4) * Tuple::Point(0, 1, 0), Tuple::Point(0, std::sqrt(2) / 2, std::sqrt(2) / 2));
+  ASSERT_EQ(Matrix4x4::rotateX(M_PI / 2) * Tuple::Point(0, 1, 0), Tuple::Point(0, 0, 1));
+}
+
+TEST(Matrix, RotationXInverse) 
+{
+  ASSERT_EQ(Matrix4x4::rotateX(M_PI / 4).inverted() * Tuple::Point(0, 1, 0), Tuple::Point(0, std::sqrt(2) / 2, -std::sqrt(2) / 2));
+}
+
+TEST(Matrix, RotationY) 
+{
+  ASSERT_EQ(Matrix4x4::rotateY(M_PI / 4) * Tuple::Point(0, 0, 1), Tuple::Point(std::sqrt(2) / 2, 0, std::sqrt(2) / 2));
+  ASSERT_EQ(Matrix4x4::rotateY(M_PI / 2) * Tuple::Point(0, 0, 1), Tuple::Point(1, 0, 0));
+}
+
+TEST(Matrix, RotationZ) 
+{
+  ASSERT_EQ(Matrix4x4::rotateZ(M_PI / 4) * Tuple::Point(0, 1, 0), Tuple::Point(-std::sqrt(2) / 2, std::sqrt(2) / 2, 0));
+  ASSERT_EQ(Matrix4x4::rotateZ(M_PI / 2) * Tuple::Point(0, 1, 0), Tuple::Point(-1, 0, 0));
+}
+
+TEST(Matrix, Shearing) 
+{
+  ASSERT_EQ(Matrix4x4::shearing(1, 0, 0, 0, 0, 0) * Tuple::Point(2, 3, 4), Tuple::Point(5, 3, 4));
+  ASSERT_EQ(Matrix4x4::shearing(0, 1, 0, 0, 0, 0) * Tuple::Point(2, 3, 4), Tuple::Point(6, 3, 4));
+  ASSERT_EQ(Matrix4x4::shearing(0, 0, 1, 0, 0, 0) * Tuple::Point(2, 3, 4), Tuple::Point(2, 5, 4));
+  ASSERT_EQ(Matrix4x4::shearing(0, 0, 0, 1, 0, 0) * Tuple::Point(2, 3, 4), Tuple::Point(2, 7, 4));
+  ASSERT_EQ(Matrix4x4::shearing(0, 0, 0, 0, 1, 0) * Tuple::Point(2, 3, 4), Tuple::Point(2, 3, 6));
+  ASSERT_EQ(Matrix4x4::shearing(0, 0, 0, 0, 0, 1) * Tuple::Point(2, 3, 4), Tuple::Point(2, 3, 7));
+}
+
+TEST(Matrix, ChainTransform) 
+{
+  Matrix4x4 rotation = Matrix4x4::rotateX(M_PI / 2);
+  Matrix4x4 scale = Matrix4x4::scale(5, 5, 5);
+  Matrix4x4 translation = Matrix4x4::translation(10, 5, 7);
+
+  Tuple p1 = rotation * Tuple::Point(1, 0, 1);
+  ASSERT_EQ(p1, Tuple::Point(1, -1, 0));
+
+  Tuple p2 = scale * p1;
+  ASSERT_EQ(p1, Tuple::Point(5, -5, 0));
+
+  Tuple p3 = translation * p1;
+  ASSERT_EQ(p1, Tuple::Point(15, 0, 7));
+  
+  ASSERT_EQ((translation * scale * rotation) * Tuple::Point(1, 0, 1), Tuple::Point(15, 0, 7));
 }

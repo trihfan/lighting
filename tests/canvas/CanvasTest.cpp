@@ -1,5 +1,4 @@
 #include <gtest/gtest.h>
-#include <cmath>
 #include <sstream>
 #include <iostream>
 #include "presentation/Canvas.h"
@@ -21,13 +20,13 @@ TEST(Canvas, Creation)
     ASSERT_EQ(c.height(), 20);
     for (size_t i = 0; i < 10 * 20; i++)
     {
-        ASSERT_EQ(c(i), color(0, 0, 0, 0));
+        ASSERT_EQ(c(i), Color(0, 0, 0, 0));
     }
     for (size_t x = 0; x < 10; x++)
     {
         for (size_t y = 0; y < 20; y++)
         {
-            ASSERT_EQ(c(x, y), color(0, 0, 0, 0));
+            ASSERT_EQ(c(x, y), Color(0, 0, 0, 0));
         }
     }
 }
@@ -35,16 +34,16 @@ TEST(Canvas, Creation)
 TEST(Canvas, Write) 
 {
     Canvas c(10, 20);
-    c(2, 3) = color(1, 0, 0);
-    ASSERT_EQ(c(2, 3), color(1, 0, 0));
+    c(2, 3) = Color(1, 0, 0);
+    ASSERT_EQ(c(2, 3), Color(1, 0, 0));
 }
 
 TEST(Canvas, PPMExport) 
 {
     Canvas c(5, 3);
-    c(0, 0) = color(1.5, 0, 0);
-    c(2, 1) = color(0, 0.5, 0);
-    c(4, 2) = color(-0.5, 0, 1);
+    c(0, 0) = Color(1.5, 0, 0);
+    c(2, 1) = Color(0, 0.5, 0);
+    c(4, 2) = Color(-0.5, 0, 1);
 
     std::stringstream output;
     std::string line;
@@ -69,7 +68,7 @@ TEST(Canvas, PPMSplit)
     Canvas c(10, 2);
     for (size_t i = 0; i < 20; i++)
     {
-        c(i) = color(1, 0.8, 0.6);
+        c(i) = Color(1, 0.8, 0.6);
     }
 
     std::stringstream output;

@@ -2,6 +2,7 @@
 #include <string>
 #include "CanvasPPMExporter.h"
 #include "Canvas.h"
+#include "maths/Color.h"
 
 using namespace lighting;
 

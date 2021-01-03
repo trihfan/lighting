@@ -5,7 +5,7 @@
 #include <ostream>
 #include <unordered_map>
 #include <memory>
-#include "maths/Tuple.h"
+#include "maths/Color.h"
 #include "CanvasExporter.h"
 
 namespace lighting
@@ -22,10 +22,10 @@ namespace lighting
         size_t height() const;
 
         // access
-        Tuple& operator()(size_t index);
-        const Tuple& operator()(size_t index) const;
-        Tuple& operator()(size_t x, size_t y);
-        const Tuple& operator()(size_t x, size_t y) const;
+        Color& operator()(size_t index);
+        const Color& operator()(size_t index) const;
+        Color& operator()(size_t x, size_t y);
+        const Color& operator()(size_t x, size_t y) const;
 
         // export
         bool exportTo(std::ostream& output, std::string type) const;
@@ -33,7 +33,7 @@ namespace lighting
     private:
         size_t w;
         size_t h;
-        std::vector<Tuple> content;
+        std::vector<Color> content;
         static std::unordered_map<std::string, std::shared_ptr<CanvasExporter>> exporters;
     };
 }

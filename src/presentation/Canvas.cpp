@@ -25,22 +25,22 @@ size_t Canvas::height() const
     return h;
 }
 
-Tuple& Canvas::operator()(size_t index)
+Color& Canvas::operator()(size_t index)
 {
     return content[index];
 }
 
-const Tuple& Canvas::operator()(size_t index) const
+const Color& Canvas::operator()(size_t index) const
 {
     return content[index];
 }
 
-Tuple& Canvas::operator()(size_t x, size_t y)
+Color& Canvas::operator()(size_t x, size_t y)
 {
     return content[y * w + x];
 }
 
-const Tuple& Canvas::operator()(size_t x, size_t y) const
+const Color& Canvas::operator()(size_t x, size_t y) const
 {
     return content[y * w + x];
 }

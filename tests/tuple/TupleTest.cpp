@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
-#include <cmath>
 #include "maths/Tuple.h"
+#include "maths/Color.h"
 
 using namespace lighting;
 
@@ -34,21 +34,21 @@ TEST(Tuple, IsVector)
 
 TEST(Tuple, Point) 
 {
-    ASSERT_EQ(point(4.3, -4.2, 3.1), Tuple(4.3, -4.2, 3.1, 1));
+    ASSERT_EQ(Tuple::Point(4.3, -4.2, 3.1), Tuple(4.3, -4.2, 3.1, 1));
 }
 
 TEST(Tuple, Vector) 
 {
-    ASSERT_EQ(vector(4.3, -4.2, 3.1), Tuple(4.3, -4.2, 3.1, 0));
+    ASSERT_EQ(Tuple::Vector(4.3, -4.2, 3.1), Tuple(4.3, -4.2, 3.1, 0));
 }
 
 TEST(Tuple, Color) 
 {
-    ASSERT_EQ(color(-0.5, 0.4, 1.7), Tuple(-0.5, 0.4, 1.7, 1));
-    ASSERT_DOUBLE_EQ(color(-0.5, 0.4, 1.7).r(), -0.5);
-    ASSERT_DOUBLE_EQ(color(-0.5, 0.4, 1.7).g(), 0.4);
-    ASSERT_DOUBLE_EQ(color(-0.5, 0.4, 1.7).b(), 1.7);
-    ASSERT_DOUBLE_EQ(color(-0.5, 0.4, 1.7).a(), 1);
+    ASSERT_EQ(Color(-0.5, 0.4, 1.7), Tuple(-0.5, 0.4, 1.7, 1));
+    ASSERT_DOUBLE_EQ(Color(-0.5, 0.4, 1.7).r(), -0.5);
+    ASSERT_DOUBLE_EQ(Color(-0.5, 0.4, 1.7).g(), 0.4);
+    ASSERT_DOUBLE_EQ(Color(-0.5, 0.4, 1.7).b(), 1.7);
+    ASSERT_DOUBLE_EQ(Color(-0.5, 0.4, 1.7).a(), 1);
 }
 
 TEST(Tuple, Add) 
@@ -58,12 +58,12 @@ TEST(Tuple, Add)
 
 TEST(Tuple, Sub) 
 {
-    ASSERT_EQ(point(3, 2, 1) - point(5, 6, 7), vector(-2, -4, -6));
-    ASSERT_EQ(point(3, 2, 1) -= point(5, 6, 7), vector(-2, -4, -6));
-    ASSERT_EQ(point(3, 2, 1) - vector(5, 6, 7), point(-2, -4, -6));
-    ASSERT_EQ(point(3, 2, 1) -= vector(5, 6, 7), point(-2, -4, -6));
-    ASSERT_EQ(vector(3, 2, 1) - vector(5, 6, 7), vector(-2, -4, -6));
-    ASSERT_EQ(vector(3, 2, 1) -= vector(5, 6, 7), vector(-2, -4, -6));
+    ASSERT_EQ(Tuple::Point(3, 2, 1) - Tuple::Point(5, 6, 7), Tuple::Vector(-2, -4, -6));
+    ASSERT_EQ(Tuple::Point(3, 2, 1) -= Tuple::Point(5, 6, 7), Tuple::Vector(-2, -4, -6));
+    ASSERT_EQ(Tuple::Point(3, 2, 1) - Tuple::Vector(5, 6, 7), Tuple::Point(-2, -4, -6));
+    ASSERT_EQ(Tuple::Point(3, 2, 1) -= Tuple::Vector(5, 6, 7), Tuple::Point(-2, -4, -6));
+    ASSERT_EQ(Tuple::Point(3, 2, 1) - Tuple::Vector(5, 6, 7), Tuple::Point(-2, -4, -6));
+    ASSERT_EQ(Tuple::Point(3, 2, 1) -= Tuple::Vector(5, 6, 7), Tuple::Point(-2, -4, -6));
 }
 
 TEST(Tuple, Negate) 
@@ -89,36 +89,36 @@ TEST(Tuple, Div)
 
 TEST(Tuple, Length) 
 {
-    ASSERT_DOUBLE_EQ(vector(1, 0, 0).length(), 1);
-    ASSERT_DOUBLE_EQ(vector(0, 1, 0).length(), 1);
-    ASSERT_DOUBLE_EQ(vector(0, 0, 1).length(), 1);
-    ASSERT_DOUBLE_EQ(vector(1, 2, 3).length(), std::sqrt(14));
-    ASSERT_DOUBLE_EQ(vector(-1, -2, -3).length(), std::sqrt(14));
+    ASSERT_DOUBLE_EQ(Tuple::Vector(1, 0, 0).length(), 1);
+    ASSERT_DOUBLE_EQ(Tuple::Vector(0, 1, 0).length(), 1);
+    ASSERT_DOUBLE_EQ(Tuple::Vector(0, 0, 1).length(), 1);
+    ASSERT_DOUBLE_EQ(Tuple::Vector(1, 2, 3).length(), std::sqrt(14));
+    ASSERT_DOUBLE_EQ(Tuple::Vector(-1, -2, -3).length(), std::sqrt(14));
 }
 
 TEST(Tuple, Normalize) 
 {
-    ASSERT_EQ(vector(4, 0, 0).normalized(), vector(1, 0, 0));
-    Tuple a = vector(4, 0, 0); a.normalize(); ASSERT_EQ(a, vector(1, 0, 0));
-    ASSERT_EQ(vector(1, 2, 3).normalized(), vector(1 / std::sqrt(14), 2 / std::sqrt(14), 3 / std::sqrt(14)));
-    Tuple b = vector(1, 2, 3); b.normalize(); ASSERT_EQ(b, vector(1 / std::sqrt(14), 2 / std::sqrt(14), 3 / std::sqrt(14)));
+    ASSERT_EQ(Tuple::Vector(4, 0, 0).normalized(), Tuple::Vector(1, 0, 0));
+    Tuple a = Tuple::Vector(4, 0, 0); a.normalize(); ASSERT_EQ(a, Tuple::Vector(1, 0, 0));
+    ASSERT_EQ(Tuple::Vector(1, 2, 3).normalized(), Tuple::Vector(1 / std::sqrt(14), 2 / std::sqrt(14), 3 / std::sqrt(14)));
+    Tuple b = Tuple::Vector(1, 2, 3); b.normalize(); ASSERT_EQ(b, Tuple::Vector(1 / std::sqrt(14), 2 / std::sqrt(14), 3 / std::sqrt(14)));
 }
 
 TEST(Tuple, Dot) 
 {   
-    ASSERT_DOUBLE_EQ(dot(vector(1, 2, 3), vector(2, 3, 4)), 20);
+    ASSERT_DOUBLE_EQ(dot(Tuple::Vector(1, 2, 3), Tuple::Vector(2, 3, 4)), 20);
 }
 
 TEST(Tuple, Cross) 
 {   
-    ASSERT_EQ(cross(vector(1, 2, 3), vector(2, 3, 4)), vector(-1, 2, -1));
-    ASSERT_EQ(cross(vector(2, 3, 4), vector(1, 2, 3)), vector(1, -2, 1));
+    ASSERT_EQ(cross(Tuple::Vector(1, 2, 3), Tuple::Vector(2, 3, 4)), Tuple::Vector(-1, 2, -1));
+    ASSERT_EQ(cross(Tuple::Vector(2, 3, 4), Tuple::Vector(1, 2, 3)), Tuple::Vector(1, -2, 1));
 }
 
 TEST(Tuple, Colors) 
 {   
-    ASSERT_EQ(color(0.9, 0.6, 0.75) + color(0.7, 0.1, 0.25), Tuple(1.6, 0.7, 1.0, 2));
-    ASSERT_EQ(color(0.9, 0.6, 0.75) - color(0.7, 0.1, 0.25), Tuple(0.2, 0.5, 0.5, 0));
-    ASSERT_EQ(color(0.2, 0.3, 0.4) * 2, Tuple(0.4, 0.6, 0.8, 2));
-    ASSERT_EQ(color(1, 0.2, 0.4) * color(0.9, 1, 0.1), Tuple(0.9, 0.2, 0.04, 1));
+    ASSERT_EQ(Color(0.9, 0.6, 0.75) + Color(0.7, 0.1, 0.25), Tuple(1.6, 0.7, 1.0, 2));
+    ASSERT_EQ(Color(0.9, 0.6, 0.75) - Color(0.7, 0.1, 0.25), Tuple(0.2, 0.5, 0.5, 0));
+    ASSERT_EQ(Color(0.2, 0.3, 0.4) * 2, Tuple(0.4, 0.6, 0.8, 2));
+    ASSERT_EQ(Color(1, 0.2, 0.4) * Color(0.9, 1, 0.1), Tuple(0.9, 0.2, 0.04, 1));
 }

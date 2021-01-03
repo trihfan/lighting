@@ -1,5 +1,4 @@
 #include <algorithm>
-#include <cmath>
 #include "Tuple.h"
 #include "Definitions.h"
 #include "Matrix.h"

@@ -158,17 +158,17 @@ namespace lighting
         /**
          * compute submatrix
          */
-        Matrix2x2 submatrix(int rowToRemove, int colToRemove) const;
+        Matrix2x2 submatrix(size_t rowToRemove, size_t colToRemove) const;
 
         /**
          * minor
          */
-        double minor(int rowToRemove, int colToRemove) const;
+        double minor(size_t rowToRemove, size_t colToRemove) const;
 
         /**
          * cofactor
          */
-        double cofactor(int rowToRemove, int colToRemove) const;
+        double cofactor(size_t rowToRemove, size_t colToRemove) const;
 
         /**
          * determinant
@@ -195,17 +195,17 @@ namespace lighting
         /**
          * compute submatrix
          */
-        Matrix3x3 submatrix(int rowToRemove, int colToRemove) const;
+        Matrix3x3 submatrix(size_t rowToRemove, size_t colToRemove) const;
 
         /**
          * minor
          */
-        double minor(int rowToRemove, int colToRemove) const;
+        double minor(size_t rowToRemove, size_t colToRemove) const;
 
         /**
          * cofactor
          */
-        double cofactor(int rowToRemove, int colToRemove) const;
+        double cofactor(size_t rowToRemove, size_t colToRemove) const;
 
         /**
          * determinant
@@ -222,6 +222,18 @@ namespace lighting
          */
         Matrix4x4& inverse();
         Matrix4x4 inverted() const;
+
+        /**
+         * Transformations
+         */
+        static Matrix4x4 translation(const Tuple& value);
+        static Matrix4x4 translation(double x, double y, double z);
+        static Matrix4x4 scale(const Tuple& value);
+        static Matrix4x4 scale(double x, double y, double z);
+        static Matrix4x4 rotateX(double radians);
+        static Matrix4x4 rotateY(double radians);
+        static Matrix4x4 rotateZ(double radians);
+        static Matrix4x4 shearing(double xy, double xz, double yx, double yz, double zx, double zy);
     };
 
     // other operators
