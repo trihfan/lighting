@@ -8,7 +8,7 @@
 
 namespace lighting
 {
-    class Matrix;
+    //class Matrix;
     class Tuple;
     using Point = Tuple;
     using Vector = Tuple;
@@ -73,7 +73,6 @@ namespace lighting
         Tuple operator*(double scalar) const;
         Tuple& operator*=(const Tuple& other);
         Tuple operator*(const Tuple& other) const;
-        Tuple operator*(const Matrix& other) const;
 
         // div
         Tuple& operator/=(double scalar);

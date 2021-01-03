@@ -112,7 +112,7 @@ Tuple Tuple::operator*(const Tuple& other) const
     return Tuple(data[0] * other.data[0], data[1] * other.data[1], data[2] * other.data[2], data[3] * other.data[3]);
 }
 
-Tuple Tuple::operator*(const Matrix& other) const
+/*Tuple Tuple::operator*(const Matrix& other) const
 {
     Tuple t;
     for (size_t row = 0; row < 4; row++)
@@ -120,7 +120,7 @@ Tuple Tuple::operator*(const Matrix& other) const
         t(row) = other(row, 0) * (*this)(0) + other(row, 1) * (*this)(1) + other(row, 2) * (*this)(2) + other(row, 3) * (*this)(3);
     }
     return t;
-}
+}*/
 
 Tuple& Tuple::operator/=(double scalar)
 {
