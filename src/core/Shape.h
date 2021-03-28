@@ -18,7 +18,7 @@ namespace lighting
         virtual ~Shape() = default;
 
         // intersection
-        void intersect(const Ray& ray, std::vector<double>& intersections) const = 0;
+        virtual void intersect(const Ray& ray, std::vector<double>& intersections) const = 0;
     };
 }
 #endif
